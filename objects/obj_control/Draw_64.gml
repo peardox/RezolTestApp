@@ -21,7 +21,13 @@ if(RezolScreens) {
 			draw_text(16, 168, "On Screen " + string(_onscr + 1));
 		
 			for(var _i = 0; _i < array_length(RezolScreens.screen); _i++) {
-				draw_text(16, 190 + (_i * 16), "Screen" + string(_i+1) + " : " + string(RezolScreens.screen[_i].virtual));
+				if(_i == RezolScreens.active) {
+					draw_set_colour(c_yellow);
+				}
+				draw_text(16, 190 + (_i * 16), "Screen#" + string(_i+1) + 
+					" Virtual : " + string(RezolScreens.screen[_i].virtual) + 
+					" Physical : " + string(RezolScreens.screen[_i].physical));
+				draw_set_colour(c_white);
 			}
 		}
 	}

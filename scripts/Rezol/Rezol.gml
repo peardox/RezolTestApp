@@ -96,12 +96,12 @@ function rezol_screen() constructor {
 	
 	// DPI X
 	static ppix = function() {
-		return self.box.width / (self.physical.width / 25.4);
+		return (self.virtual.width() / real(self.physical.width)) * 25.4;
 	}
 
 	// DPI Y	
 	static ppiy = function() {
-		return self.box.height / (self.physical.height / 25.4);
+		return (self.virtual.height() / real(self.physical.height)) * 25.4;
 	}
 
 	// DPI
@@ -145,7 +145,6 @@ function window_chrome() constructor {
 	      - max(self.virtual.top, _target.virtual.top)
 	    );
     
-		show_debug_message(string(overlap_w) + " * " + string(overlap_h));
 	    // Area is width * height
 	    return overlap_w * overlap_h;
 	}

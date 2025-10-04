@@ -24,11 +24,12 @@ if(RezolScreens) {
 				if(_i == RezolScreens.active) {
 					draw_set_colour(c_yellow);
 				}
-				draw_text(16, 190 + (_i * 16), "Screen#" + string(_i+1) + 
+				draw_text(16, 200 + (_i * 16), "Screen#" + string(_i+1) + 
 					" Virtual : " + string(RezolScreens.screen[_i].virtual) + 
 					" Physical : " + string(RezolScreens.screen[_i].physical));
 				draw_set_colour(c_white);
 			}
+			draw_text(16, 296, "Press <F2> to switch to next screen / Press <Esc> to Exit");
 		}
 	}
 }

@@ -28,11 +28,11 @@ function rezol_screenrect(_left, _top, _right, _bottom) constructor {
 	self.bottom := _bottom;
 	
 	static width = function() {
-		return self.right - self.left;
+		return real(self.right - self.left);
 	}
 	
 	static height = function() {
-		return self.bottom - self.top;
+		return real(self.bottom - self.top);
 	}
 	
 	static aspect = function() {
@@ -117,7 +117,6 @@ function rezol_screen() constructor {
 		}
 	}
 	
-
 }
 
 function window_chrome() constructor {
@@ -130,6 +129,18 @@ function window_chrome() constructor {
 	
 	static add_working = function(_left, _top, _right, _bottom) {
 		self.working = new rezol_screenrect(_left, _top, _right, _bottom);
+	}
+	
+	// The actual chrome height is the difference between virtual and working
+	// minus the border (from width) which results in caption height
+	static height = function() {
+		return (self.virtual.height() - self.working.height() - self.width());
+	}
+	
+	// The actual chrome width is 1/2 the difference between virtual and working
+	// as this results in the border width being returned which is a meaningful figure
+	static width = function() {
+		return (self.virtual.width() - self.working.width()) / 2.0;
 	}
 	
 	static overlap = function(_target) {
@@ -206,6 +217,21 @@ function rezol_screen_info() constructor {
 			self.activate(_p);
 		}
 	}
+
+	static SwitchTo = function(_which) {
+		if((_which >= 0) && (_which < array_length(RezolScreens.screen))) {
+			self.active = _which;
+			var _scr = get_chrome();
+			window_set_rectangle(
+				self.screen[self.active].virtual.left + _scr.height() + ((self.screen[self.active].virtual.width() - _scr.virtual.width()) / 2) ,
+				self.screen[self.active].virtual.top + ((self.screen[self.active].virtual.height() - _scr.virtual.height()) / 2),
+				room_width,
+				room_height
+				);
+			
+		}
+	}
+
 }
 
 function read_screen_data() {
